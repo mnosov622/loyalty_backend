@@ -10,10 +10,13 @@ import { ItemsModule } from './items/items.module';
 import { TasksService } from './tasks/tasks.service';
 import { TasksController } from './tasks/tasks.controller';
 import { TasksModule } from './tasks/tasks.module';
+import { NewsService } from './news/news.service';
+import { NewsController } from './news/news.controller';
+import { NewsModule } from './news/news.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ItemsModule, TasksModule],
-  controllers: [AppController, AuthController, ItemsController, TasksController],
-  providers: [AppService, ItemsService, TasksService],
+  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule],
+  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController],
+  providers: [AppService, ItemsService, TasksService, NewsService],
 })
 export class AppModule {}
