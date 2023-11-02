@@ -23,10 +23,12 @@ import { QuestsModule } from './quests/quests.module';
 import { TestsService } from './tests/tests.service';
 import { TestsController } from './tests/tests.controller';
 import { TestsModule } from './tests/tests.module';
+import { AnalyticsController } from './analytics/analytics.controller';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule, QuestsModule, TestsModule],
-  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController, QuestsController, TestsController],
+  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule, QuestsModule, TestsModule, AnalyticsModule],
+  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController, QuestsController, TestsController, AnalyticsController],
   providers: [AppService, ItemsService, TasksService, NewsService, RolesService, QuestsService, TestsService],
 })
 export class AppModule {}

@@ -94,4 +94,13 @@ export class User extends Model {
     type: DataType.STRING,
   })
   phoneNumber: string;
+
+  @ApiProperty({
+    example: 250,
+    description: 'Количество токенов',
+  })
+  @Column({
+    type: DataType.NUMBER,
+  })
+  tokenAmount: Number;
 }
