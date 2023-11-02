@@ -13,10 +13,13 @@ import { TasksModule } from './tasks/tasks.module';
 import { NewsService } from './news/news.service';
 import { NewsController } from './news/news.controller';
 import { NewsModule } from './news/news.module';
+import { RolesService } from './roles/roles.service';
+import { RolesController } from './roles/roles.controller';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule],
-  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController],
-  providers: [AppService, ItemsService, TasksService, NewsService],
+  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule],
+  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController],
+  providers: [AppService, ItemsService, TasksService, NewsService, RolesService],
 })
 export class AppModule {}
