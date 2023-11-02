@@ -17,10 +17,13 @@ import { RolesService } from './roles/roles.service';
 import { RolesController } from './roles/roles.controller';
 import { RolesModule } from './roles/roles.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { QuestsService } from './quests/quests.service';
+import { QuestsController } from './quests/quests.controller';
+import { QuestsModule } from './quests/quests.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule],
-  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController],
-  providers: [AppService, ItemsService, TasksService, NewsService, RolesService],
+  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule, QuestsModule],
+  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController, QuestsController],
+  providers: [AppService, ItemsService, TasksService, NewsService, RolesService, QuestsService],
 })
 export class AppModule {}
