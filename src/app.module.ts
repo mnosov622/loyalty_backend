@@ -20,10 +20,13 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { QuestsService } from './quests/quests.service';
 import { QuestsController } from './quests/quests.controller';
 import { QuestsModule } from './quests/quests.module';
+import { TestsService } from './tests/tests.service';
+import { TestsController } from './tests/tests.controller';
+import { TestsModule } from './tests/tests.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule, QuestsModule],
-  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController, QuestsController],
-  providers: [AppService, ItemsService, TasksService, NewsService, RolesService, QuestsService],
+  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule, QuestsModule, TestsModule],
+  controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController, QuestsController, TestsController],
+  providers: [AppService, ItemsService, TasksService, NewsService, RolesService, QuestsService, TestsService],
 })
 export class AppModule {}
