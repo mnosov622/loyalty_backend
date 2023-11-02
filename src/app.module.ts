@@ -16,9 +16,10 @@ import { NewsModule } from './news/news.module';
 import { RolesService } from './roles/roles.service';
 import { RolesController } from './roles/roles.controller';
 import { RolesModule } from './roles/roles.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule],
+  imports: [UsersModule, AuthModule, ItemsModule, TasksModule, NewsModule, RolesModule, TransactionsModule],
   controllers: [AppController, AuthController, ItemsController, TasksController, NewsController, RolesController],
   providers: [AppService, ItemsService, TasksService, NewsService, RolesService],
 })
