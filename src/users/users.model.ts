@@ -42,7 +42,7 @@ export class User extends Model {
   })
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
   })
   username: string;
@@ -100,7 +100,16 @@ export class User extends Model {
     description: 'Количество токенов',
   })
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
   })
-  tokenAmount: Number;
+  tokenAmount: number;
+
+  @ApiProperty({
+    example: '0x3Dd03d7d6c3137f1Eb7582BaFfE949b1E3B4E9A7',
+    description: 'Wallet address',
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  wallet_address: string;
 }
