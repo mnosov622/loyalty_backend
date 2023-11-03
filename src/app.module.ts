@@ -43,7 +43,6 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.POSTGRES_DB,
       models: [User],
       autoLoadModels: true,
-      sync: { force: true },
     }),
     UsersModule,
     AuthModule,

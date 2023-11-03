@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { LoginDto } from './dto/users.dto';
 
 @Injectable()
 export class UsersService {
@@ -31,4 +32,28 @@ export class UsersService {
       );
     }
   }
+
+  // async login(loginDto: LoginDto) {
+  //   const { walletAddress, email, username } = loginDto;
+
+  //   if (!walletAddress && !email && !username) {
+  //     throw new HttpException(
+  //       'Please provide a wallet address, email, or username.',
+  //       HttpStatus.BAD_REQUEST,
+  //     );
+  //   }
+
+  //   const user =
+  //     await this.userService.findUserByWalletAddressOrEmailOrUsername(
+  //       walletAddress,
+  //       email,
+  //       username,
+  //     );
+
+  //   if (!user) {
+  //     throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+  //   }
+
+  //   return user;
+  // }
 }
