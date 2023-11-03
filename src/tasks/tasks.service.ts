@@ -10,6 +10,7 @@ export class TasksService {
   }
 
   async createTask(taskDto: TaskDto) {
+    if (!taskDto) throw new Error('No task data provided');
     try {
       const task = await Task.create({ ...taskDto });
       return task;
@@ -23,6 +24,19 @@ export class TasksService {
     try {
       const task = await Task.findByPk(id);
       if (!task) throw new Error('No task found');
+      return task;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async updateTask(id: number, taskDto: TaskDto) {
+    if (!id) throw new Error('No task id provided');
+    if (!taskDto) throw new Error('No task data provided');
+    try {
+      const task = await Task.findByPk(id);
+      if (!task) throw new Error('No task found');
+      await task.update({ ...taskDto });
       return task;
     } catch (e) {
       throw new Error(e);

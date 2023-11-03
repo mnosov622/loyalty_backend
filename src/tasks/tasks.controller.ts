@@ -18,7 +18,11 @@ export class TasksController {
 
   @Post()
   createTask(@Body() taskDto: TaskDto) {
-    if (!taskDto) throw new Error('No task data provided');
     return this.tasksService.createTask(taskDto);
+  }
+
+  @Post(':id')
+  updateTask(@Param('id') id: number, @Body() taskDto: TaskDto) {
+    return this.tasksService.updateTask(id, taskDto);
   }
 }
