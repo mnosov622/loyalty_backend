@@ -116,4 +116,48 @@ export class UsersService {
       );
     }
   }
+
+  async getUserByEmail(email: string) {
+    try {
+      const user = await this.userModel.findOne({
+        where: { email: email },
+      });
+
+      if (!user) {
+        throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+      }
+
+      return user;
+    } catch (e) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Failed to get user:' + e.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getUserByWalletAddress(walletAddress: string) {
+    try {
+      const user = await this.userModel.findOne({
+        where: { wallet_address: walletAddress },
+      });
+
+      if (!user) {
+        throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+      }
+
+      return user;
+    } catch (e) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Failed to get user:' + e.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
