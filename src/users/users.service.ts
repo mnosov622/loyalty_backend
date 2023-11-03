@@ -82,7 +82,9 @@ export class UsersService {
 
   async getUsers() {
     try {
-      const users = await this.userModel.findAll();
+      const users = await this.userModel.findAll({
+        attributes: { exclude: ['password'] },
+      });
       return users;
     } catch (e) {
       throw new HttpException(
@@ -99,6 +101,7 @@ export class UsersService {
     try {
       const user = await this.userModel.findOne({
         where: { username: username },
+        attributes: { exclude: ['password'] },
       });
 
       if (!user) {
@@ -121,6 +124,7 @@ export class UsersService {
     try {
       const user = await this.userModel.findOne({
         where: { email: email },
+        attributes: { exclude: ['password'] },
       });
 
       if (!user) {
@@ -143,6 +147,7 @@ export class UsersService {
     try {
       const user = await this.userModel.findOne({
         where: { wallet_address: walletAddress },
+        attributes: { exclude: ['password'] },
       });
 
       if (!user) {
