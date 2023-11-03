@@ -1,5 +1,8 @@
-export class TaskDto {
-  title: string;
-  description: string;
-  dueDate: string;
+export class UserDto {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  password: string;
+  walletAddress?: string;
 }

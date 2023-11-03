@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Task } from './tasks.model';
-import { TaskDto } from '@/users/dto/users.dto';
+import { TaskDto } from './dto/tasks.dto';
 
 @Injectable()
 export class TasksService {
