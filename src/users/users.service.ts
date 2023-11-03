@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { LoginDto } from './dto/users.dto';
-import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -78,6 +76,21 @@ export class UsersService {
           error: 'No login data provided',
         },
         HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async getUsers() {
+    try {
+      const users = await this.userModel.findAll();
+      return users;
+    } catch (e) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Failed to get users:' + e.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }

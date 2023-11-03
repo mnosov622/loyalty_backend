@@ -6,6 +6,7 @@ import { UsersService } from 'src/users/users.service';
 @Controller('auth')
 export class AuthController {
   constructor(private usersService: UsersService) {}
+
   @Post('/signup')
   signup(@Body() signupDto: SignupDto) {
     return this.usersService.createUser(signupDto as User);
