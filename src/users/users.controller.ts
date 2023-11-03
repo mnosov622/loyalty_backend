@@ -9,4 +9,9 @@ export class UsersController {
   getUsers() {
     return this.usersService.getUsers();
   }
+
+  @Get(':username')
+  getUserByUsername(@Param('username') username: string) {
+    return this.usersService.getUserByUsername(username);
+  }
 }

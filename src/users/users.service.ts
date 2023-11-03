@@ -94,4 +94,26 @@ export class UsersService {
       );
     }
   }
+
+  async getUserByUsername(username: string) {
+    try {
+      const user = await this.userModel.findOne({
+        where: { username: username },
+      });
+
+      if (!user) {
+        throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+      }
+
+      return user;
+    } catch (e) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Failed to get user:' + e.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
