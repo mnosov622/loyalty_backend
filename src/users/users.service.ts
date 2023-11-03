@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { LoginDto } from './dto/users.dto';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -33,27 +34,51 @@ export class UsersService {
     }
   }
 
-  // async login(loginDto: LoginDto) {
-  //   const { walletAddress, email, username } = loginDto;
+  async login(loginData: User) {
+    if (loginData.wallet_address || loginData.email || loginData.username) {
+      const searchParams = ['walletAddress', 'email', 'username'].reduce(
+        (params, field) => {
+          if (loginData[field]) {
+            params[field] = loginData[field];
+          }
+          return params;
+        },
+        {},
+      );
 
-  //   if (!walletAddress && !email && !username) {
-  //     throw new HttpException(
-  //       'Please provide a wallet address, email, or username.',
-  //       HttpStatus.BAD_REQUEST,
-  //     );
-  //   }
+      try {
+        const user = await this.userModel.findOne({
+          where: searchParams,
+        });
 
-  //   const user =
-  //     await this.userService.findUserByWalletAddressOrEmailOrUsername(
-  //       walletAddress,
-  //       email,
-  //       username,
-  //     );
+        //TODO: compare hashed password with password provided
+        //   const isPasswordMatching = await bcrypt.compare(password, user.password);
+        // if (!isPasswordMatching) {
+        //   throw new HttpException('Wrong credentials provided.', HttpStatus.BAD_REQUEST);
+        // }
 
-  //   if (!user) {
-  //     throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
-  //   }
+        if (!user) {
+          throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+        }
 
-  //   return user;
-  // }
+        return user;
+      } catch (e) {
+        throw new HttpException(
+          {
+            status: HttpStatus.INTERNAL_SERVER_ERROR,
+            error: 'Failed to login:' + e.message,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    } else {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'No login data provided',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }
