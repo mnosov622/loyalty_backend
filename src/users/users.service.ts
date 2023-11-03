@@ -33,7 +33,9 @@ export class UsersService {
   }
 
   async login(loginData: User) {
-    if (loginData.wallet_address || loginData.email || loginData.username) {
+    const { email, wallet_address, username, password } = loginData;
+
+    if (wallet_address || email || username) {
       const searchParams = ['walletAddress', 'email', 'username'].reduce(
         (params, field) => {
           if (loginData[field]) {
