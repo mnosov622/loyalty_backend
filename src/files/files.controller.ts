@@ -41,9 +41,19 @@ export class FilesController {
           cb(null, file.originalname);
         },
       }),
+      limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB
+      fileFilter: (req, file, cb) => {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+          return cb(new Error('Only image files are allowed!'), false);
+        }
+        cb(null, true);
+      },
     }),
   )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new Error('File too large');
+    }
     const filePath = `files/${file?.filename}`;
     await this.fileService.createFile(filePath);
     return {
