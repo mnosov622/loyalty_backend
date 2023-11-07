@@ -112,4 +112,14 @@ export class User extends Model {
     type: DataType.STRING,
   })
   wallet_address: string;
+
+  @ApiProperty({
+    example: 'admin',
+    description: 'User role',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  role: string;
 }
