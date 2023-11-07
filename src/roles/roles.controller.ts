@@ -12,7 +12,7 @@ export class RolesController {
 
   @Get(':id')
   getUserRole(@Param('id') id: number) {
-    return this.rolesService.getUserRole(id);
+    return this.rolesService.getUserRoles(id);
   }
 
   @Post()
@@ -25,6 +25,11 @@ export class RolesController {
 
   @Post('/assign/:id')
   assignRole(@Param('id') userId: number, @Body('roles') roles: number[]) {
-    return this.rolesService.assignRole(userId, roles);
+    return this.rolesService.assignRoles(userId, roles);
+  }
+
+  @Post('/delete/:id')
+  deleteRole(@Param('id') userId: number, @Body('roles') roles: number[]) {
+    return this.rolesService.deleteRoles(userId, roles);
   }
 }
