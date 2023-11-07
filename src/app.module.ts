@@ -31,6 +31,12 @@ import { ConfigModule } from '@nestjs/config';
 import { Task } from './tasks/tasks.model';
 import { Analytics } from './analytics/analytics.model';
 import { Role } from './roles/roles.model';
+import { Test } from './tests/tests.model';
+import { Item } from './items/items.model';
+import { News } from './news/news.model';
+import { Auth } from './auth/auth.model';
+import { Transaction } from './transactions/transactions.model';
+import { Quest } from './quests/quests.model';
 
 @Module({
   imports: [
@@ -44,7 +50,18 @@ import { Role } from './roles/roles.model';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Task, Analytics, Role],
+      models: [
+        User,
+        Task,
+        Analytics,
+        Role,
+        Test,
+        Item,
+        News,
+        Auth,
+        Transaction,
+        Quest,
+      ],
       autoLoadModels: true,
     }),
     UsersModule,
