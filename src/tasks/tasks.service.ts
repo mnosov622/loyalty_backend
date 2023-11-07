@@ -42,4 +42,15 @@ export class TasksService {
       throw new Error(e);
     }
   }
+
+  async deleteTask(id: number) {
+    if (!id) throw new Error('No task id provided');
+    try {
+      const result = await Task.destroy({ where: { id } });
+      if (result === 0) throw new Error('No task found');
+      return { message: `Task with id ${id} has been deleted` };
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
 }

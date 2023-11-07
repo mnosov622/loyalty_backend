@@ -29,12 +29,13 @@ export class NewsService {
     }
   }
 
-  deleteNews(id: number) {
+  async deleteNews(id: number) {
     try {
-      News.destroy({ where: { id } });
+      const result = await News.destroy({ where: { id } });
+      if (result === 0) throw new Error('No news item found with the given id');
       return { message: `News with id ${id} has been deleted` };
     } catch (e) {
-      throw new Error(e);
+      throw new Error(e.message);
     }
   }
 }
