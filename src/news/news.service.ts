@@ -9,6 +9,16 @@ export class NewsService {
     return news;
   }
 
+  async getNewsById(id: number) {
+    try {
+      const news = await News.findByPk(id);
+      if (!news) throw new Error('No news found');
+      return news;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async createNews(bodyNews: NewsDto) {
     try {
       const news = await News.create({ ...bodyNews });

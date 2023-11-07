@@ -12,6 +12,11 @@ export class NewsController {
     return this.newsService.getNews();
   }
 
+  @Get(':id')
+  getNewsById(@Param('id') id: number) {
+    return this.newsService.getNewsById(id);
+  }
+
   @Post()
   createNews(@Body() news: NewsDto) {
     return this.newsService.createNews(news);
