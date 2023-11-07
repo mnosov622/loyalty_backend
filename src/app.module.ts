@@ -37,6 +37,10 @@ import { News } from './news/news.model';
 import { Auth } from './auth/auth.model';
 import { Transaction } from './transactions/transactions.model';
 import { Quest } from './quests/quests.model';
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { Files } from './files/files.model';
 
 @Module({
   imports: [
@@ -61,9 +65,15 @@ import { Quest } from './quests/quests.model';
         Auth,
         Transaction,
         Quest,
+        Files,
       ],
       autoLoadModels: true,
     }),
+
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..'),
+    }),
+
     UsersModule,
     AuthModule,
     ItemsModule,
@@ -74,6 +84,7 @@ import { Quest } from './quests/quests.model';
     QuestsModule,
     TestsModule,
     AnalyticsModule,
+    FilesModule,
   ],
   controllers: [
     AppController,
