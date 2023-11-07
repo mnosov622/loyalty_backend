@@ -34,7 +34,7 @@ export class Transaction extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  senderAddress: string;
+  sender: string;
 
   @ApiProperty({
     example: '0x7e8f9a0b1c2d',
@@ -44,7 +44,13 @@ export class Transaction extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  recipientAddress: string;
+  recipient: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  transactionDescription: string;
 
   @ApiProperty({
     example: 100.0,
