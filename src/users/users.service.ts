@@ -61,6 +61,13 @@ export class UsersService {
           throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
         }
 
+        if (password !== user.password) {
+          throw new HttpException(
+            'Wrong credentials provided.',
+            HttpStatus.BAD_REQUEST,
+          );
+        }
+
         return user;
       } catch (e) {
         throw new HttpException(
@@ -149,6 +156,29 @@ export class UsersService {
     try {
       const user = await this.userModel.findOne({
         where: { wallet_address: walletAddress },
+        attributes: { exclude: ['password'] },
+      });
+
+      if (!user) {
+        throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+      }
+
+      return user;
+    } catch (e) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Failed to get user:' + e.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getUserById(id: number) {
+    try {
+      const user = await this.userModel.findOne({
+        where: { id: Number(id) },
         attributes: { exclude: ['password'] },
       });
 

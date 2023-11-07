@@ -10,13 +10,19 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
-  @Get(':username')
-  getUserByUsername(@Param('username') username: string) {
-    return this.usersService.getUserByUsername(username);
+  @Get(':id')
+  getUserById(@Param('id') id: number) {
+    console.log('here');
+    return this.usersService.getUserById(id);
   }
 
-  @Get(':email')
-  getUserByEmail(@Param('email') email: string) {
-    return this.usersService.getUserByEmail(email);
-  }
+  // @Get(':username')
+  // getUserByUsername(@Param('username') username: string) {
+  //   return this.usersService.getUserByUsername(username);
+  // }
+
+  // @Get(':email')
+  // getUserByEmail(@Param('email') email: string) {
+  //   return this.usersService.getUserByEmail(email);
+  // }
 }

@@ -62,9 +62,4 @@ export class FilesController {
       fileName: file,
     };
   }
-
-  @Get(':name')
-  getImageByName(@Param('name') name: string) {
-    console.log('name', name);
-  }
 }
