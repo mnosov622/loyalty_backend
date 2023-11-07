@@ -16,6 +16,11 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
+  @Post(':id')
+  updateUser(@Param('id') id: number, @Body() user: any) {
+    return this.usersService.updateUser(id, user);
+  }
+
   // @Get(':username')
   // getUserByUsername(@Param('username') username: string) {
   //   return this.usersService.getUserByUsername(username);

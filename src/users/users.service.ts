@@ -197,4 +197,20 @@ export class UsersService {
       );
     }
   }
+
+  async updateUser(id: number, user: User) {
+    try {
+      const updatedUser = await this.userModel.findByPk(id);
+      await updatedUser.update({ ...user });
+      return updatedUser;
+    } catch (e) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: 'Failed to update user:' + e.message,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
