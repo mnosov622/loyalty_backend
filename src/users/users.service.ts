@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -52,7 +53,7 @@ export class UsersService {
     }
   }
 
-  async login(loginData: User) {
+  async login(loginData: User, rememberMe?: boolean) {
     const { email, wallet_address, username, password } = loginData;
 
     if (wallet_address || email || username) {
@@ -66,50 +67,38 @@ export class UsersService {
         {},
       );
 
-      try {
-        const user = await this.userModel.findOne({
-          where: searchParams,
-        });
+      const user = await this.userModel.findOne({
+        where: searchParams,
+      });
 
-        //TODO: compare hashed password with password provided
-        //   const isPasswordMatching = await bcrypt.compare(password, user.password);
-        // if (!isPasswordMatching) {
-        //   throw new HttpException('Wrong credentials provided.', HttpStatus.BAD_REQUEST);
-        // }
+      if (!user) {
+        throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
+      }
 
-        if (!user) {
-          throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
-        }
-
-        const isPasswordMatching = await bcrypt.compare(
-          password,
-          user.password,
-        );
-        if (!isPasswordMatching) {
-          throw new HttpException(
-            'Wrong credentials provided.',
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-
-        return user;
-      } catch (e) {
+      const isPasswordMatching = await bcrypt.compare(password, user.password);
+      if (!isPasswordMatching) {
         throw new HttpException(
-          {
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            error: 'Failed to login:' + e.message,
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
+          'Wrong credentials provided.',
+          HttpStatus.UNAUTHORIZED,
         );
       }
-    } else {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'No login data provided',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
+
+      const userWithoutPassword = user.toJSON();
+      delete userWithoutPassword.password;
+
+      const jwtPayload = {
+        userId: userWithoutPassword.id,
+        roles: user.roles,
+        email: user.email,
+        username: user.username,
+        wallet_address: user?.wallet_address,
+      };
+
+      const secretKey = process.env.JWT_SECRET_KEY;
+      const expiresIn = rememberMe ? '7d' : '24h';
+      const token = jwt.sign(jwtPayload, secretKey, { expiresIn });
+
+      return { statusCode: HttpStatus.OK, data: userWithoutPassword, token };
     }
   }
 

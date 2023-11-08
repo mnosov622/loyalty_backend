@@ -13,7 +13,7 @@ export class AuthController {
   }
 
   @Post('/login')
-  login(@Body() loginDto: LoginDto) {
-    return this.usersService.login(loginDto as User);
+  login(@Body() loginDto: LoginDto, rememberMe?: boolean) {
+    return this.usersService.login(loginDto as User, rememberMe);
   }
 }
