@@ -18,6 +18,19 @@ export class UsersService {
       );
     }
 
+    const existingUser = await this.userModel.findOne({
+      where: { email: userData.email },
+    });
+    if (existingUser) {
+      throw new HttpException(
+        {
+          status: HttpStatus.CONFLICT,
+          error: 'User already exists',
+        },
+        HttpStatus.CONFLICT,
+      );
+    }
+
     try {
       const newUser = await this.userModel.create({ ...userData });
       return { status: HttpStatus.CREATED, data: newUser };
