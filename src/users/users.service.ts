@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -32,7 +33,13 @@ export class UsersService {
     }
 
     try {
-      const newUser = await this.userModel.create({ ...userData });
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(userData.password, salt);
+
+      const newUser = await this.userModel.create({
+        ...userData,
+        password: hashedPassword,
+      });
       return { status: HttpStatus.CREATED, data: newUser };
     } catch (error) {
       throw new HttpException(
@@ -74,7 +81,11 @@ export class UsersService {
           throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
         }
 
-        if (password !== user.password) {
+        const isPasswordMatching = await bcrypt.compare(
+          password,
+          user.password,
+        );
+        if (!isPasswordMatching) {
           throw new HttpException(
             'Wrong credentials provided.',
             HttpStatus.BAD_REQUEST,
