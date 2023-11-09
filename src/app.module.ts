@@ -45,6 +45,8 @@ import { SessionsController } from './sessions/sessions.controller';
 import { SessionsService } from './sessions/sessions.service';
 import { Sessions } from './sessions/sessions.model';
 import { SessionsModule } from './sessions/sessions.module';
+import { AuthGuardModule } from './auth-guard/auth-guard.module';
+import { AuthGuardService } from './auth-guard/auth-guard.service';
 
 @Module({
   imports: [
@@ -91,6 +93,7 @@ import { SessionsModule } from './sessions/sessions.module';
     AnalyticsModule,
     FilesModule,
     SessionsModule,
+    AuthGuardModule,
   ],
   controllers: [
     AppController,
@@ -113,6 +116,7 @@ import { SessionsModule } from './sessions/sessions.module';
     QuestsService,
     TestsService,
     SessionsService,
+    AuthGuardService,
   ],
 })
 export class AppModule {}
