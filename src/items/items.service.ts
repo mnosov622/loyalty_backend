@@ -5,8 +5,6 @@ import { Item } from './items.model';
 
 @Injectable()
 export class ItemsService {
-  //   constructor(@InjectModel(Item) private itemModel: typeof Item) {}
-
   async getAllItems() {
     const items = await Item.findAll();
     return items;

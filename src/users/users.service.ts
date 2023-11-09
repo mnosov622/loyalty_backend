@@ -4,10 +4,14 @@ import { User } from './users.model';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { SessionsService } from '@/sessions/sessions.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User) private readonly userModel: typeof User) {}
+  constructor(
+    @InjectModel(User) private readonly userModel: typeof User,
+    private sessionsService: SessionsService,
+  ) {}
 
   async createUser(userData: User) {
     if (!userData) {
@@ -97,6 +101,14 @@ export class UsersService {
       const secretKey = process.env.JWT_SECRET_KEY;
       const expiresIn = rememberMe ? '7d' : '24h';
       const token = jwt.sign(jwtPayload, secretKey, { expiresIn });
+
+      // TODO: save token and payload to sessions
+      // sessions table (id, token)
+      // if token is invalid (check expiry date), delete it and redirect user to login
+      // @decorator jwt guard (can activate) on each endpoint except login, logout
+      //
+
+      this.sessionsService.createSession(token);
 
       return { statusCode: HttpStatus.OK, data: userWithoutPassword, token };
     }

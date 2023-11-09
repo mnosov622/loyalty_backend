@@ -41,6 +41,10 @@ import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { Files } from './files/files.model';
+import { SessionsController } from './sessions/sessions.controller';
+import { SessionsService } from './sessions/sessions.service';
+import { Sessions } from './sessions/sessions.model';
+import { SessionsModule } from './sessions/sessions.module';
 
 @Module({
   imports: [
@@ -66,6 +70,7 @@ import { Files } from './files/files.model';
         Transaction,
         Quest,
         Files,
+        Sessions,
       ],
       autoLoadModels: true,
     }),
@@ -85,6 +90,7 @@ import { Files } from './files/files.model';
     TestsModule,
     AnalyticsModule,
     FilesModule,
+    SessionsModule,
   ],
   controllers: [
     AppController,
@@ -96,6 +102,7 @@ import { Files } from './files/files.model';
     QuestsController,
     TestsController,
     AnalyticsController,
+    SessionsController,
   ],
   providers: [
     AppService,
@@ -105,6 +112,7 @@ import { Files } from './files/files.model';
     RolesService,
     QuestsService,
     TestsService,
+    SessionsService,
   ],
 })
 export class AppModule {}
