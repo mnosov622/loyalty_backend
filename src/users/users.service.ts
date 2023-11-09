@@ -39,12 +39,14 @@ export class UsersService {
     }
 
     try {
+      const roles = [1];
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(userData.password, salt);
 
       const newUser = await this.userModel.create({
         ...userData,
         password: hashedPassword,
+        roles: roles,
       });
       return { status: HttpStatus.CREATED, data: newUser };
     } catch (error) {

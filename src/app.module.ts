@@ -47,6 +47,7 @@ import { Sessions } from './sessions/sessions.model';
 import { SessionsModule } from './sessions/sessions.module';
 import { AuthGuardModule } from './auth-guard/auth-guard.module';
 import { AuthGuardService } from './auth-guard/auth-guard.service';
+import { FilesService } from './files/files.service';
 
 @Module({
   imports: [
@@ -117,6 +118,7 @@ import { AuthGuardService } from './auth-guard/auth-guard.service';
     TestsService,
     SessionsService,
     AuthGuardService,
+    FilesService,
   ],
 })
 export class AppModule {}

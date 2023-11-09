@@ -3,5 +3,5 @@ export class NewsDto {
   title: string;
   description: string;
   publicationDate: string;
-  imageUrl: string;
+  image: string;
 }

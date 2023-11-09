@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { News } from './news.model';
 import { NewsDto } from './dto/news.dto';
 
@@ -22,7 +22,10 @@ export class NewsService {
   async createNews(bodyNews: NewsDto) {
     try {
       const news = await News.create({ ...bodyNews });
-      return news;
+      return {
+        news,
+        statusCode: HttpStatus.CREATED,
+      };
     } catch (e) {
       throw new Error(e);
     }

@@ -6,10 +6,13 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { NewsService } from './news.service';
 import { NewsDto } from './dto/news.dto';
 import { AuthGuardService } from '@/auth-guard/auth-guard.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(AuthGuardService)
 @Controller('news')
@@ -27,8 +30,9 @@ export class NewsController {
   }
 
   @Post()
-  createNews(@Body() news: NewsDto) {
-    return this.newsService.createNews(news);
+  @UseInterceptors(FileInterceptor('image'))
+  createNews(@UploadedFile() image, @Body() news: NewsDto) {
+    return this.newsService.createNews({ ...news, image });
   }
 
   @Post(':id')

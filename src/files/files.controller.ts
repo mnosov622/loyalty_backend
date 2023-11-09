@@ -55,8 +55,9 @@ export class FilesController {
   )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
-      throw new Error('File too large');
+      throw new Error('File was not found');
     }
+    console.log('file');
     const filePath = `files/${file?.filename}`;
     await this.fileService.createFile(filePath);
     return {

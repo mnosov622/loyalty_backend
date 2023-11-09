@@ -1,4 +1,8 @@
+import { FilesModule } from '@/files/files.module';
+import { FilesService } from '@/files/files.service';
 import { Module } from '@nestjs/common';
 
-@Module({})
+@Module({
+  imports: [FilesModule],
+})
 export class NewsModule {}
