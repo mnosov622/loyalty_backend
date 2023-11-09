@@ -1,8 +1,17 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { NewsService } from './news.service';
 import { NewsDto } from './dto/news.dto';
-import { News } from './news.model';
+import { AuthGuardService } from '@/auth-guard/auth-guard.service';
 
+@UseGuards(AuthGuardService)
 @Controller('news')
 export class NewsController {
   constructor(private newsService: NewsService) {}

@@ -5,6 +5,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { SessionsService } from '@/sessions/sessions.service';
+import { Response } from 'express';
 
 @Injectable()
 export class UsersService {
@@ -57,7 +58,7 @@ export class UsersService {
     }
   }
 
-  async login(loginData: User, rememberMe?: boolean) {
+  async login(loginData: User, response: Response, rememberMe?: boolean) {
     const { email, wallet_address, username, password } = loginData;
 
     if (wallet_address || email || username) {
@@ -109,6 +110,15 @@ export class UsersService {
       //
 
       this.sessionsService.createSession(token);
+
+      response.cookie('token', token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+        domain: 'localhost',
+        path: '/',
+      });
 
       return { statusCode: HttpStatus.OK, data: userWithoutPassword, token };
     }

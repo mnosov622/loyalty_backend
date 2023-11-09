@@ -33,4 +33,14 @@ export class SessionsService {
 
     return decoded;
   }
+
+  async deleteSession(token: string) {
+    try {
+      const result = await Sessions.destroy({ where: { token } });
+      if (result === 0) throw new Error('No session found');
+      return { message: `Session with token ${token} has been deleted` };
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  }
 }

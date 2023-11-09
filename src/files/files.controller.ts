@@ -5,12 +5,15 @@ import {
   UseInterceptors,
   Param,
   Get,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { FilesService } from './files.service';
 import { existsSync, mkdirSync } from 'fs';
+import { AuthGuardService } from '@/auth-guard/auth-guard.service';
 
+@UseGuards(AuthGuardService)
 @Controller('files')
 export class FilesController {
   constructor(private fileService: FilesService) {}

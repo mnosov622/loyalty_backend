@@ -1,7 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { TestsService } from './tests.service';
 import { TestDto } from './dto/test.dto';
+import { AuthGuardService } from '@/auth-guard/auth-guard.service';
 
+@UseGuards(AuthGuardService)
 @Controller('tests')
 export class TestsController {
   constructor(private testsService: TestsService) {}

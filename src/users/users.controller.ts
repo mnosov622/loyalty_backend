@@ -2,11 +2,11 @@ import { Body, Controller, Post, Get, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuardService } from '@/auth-guard/auth-guard.service';
 
+@UseGuards(AuthGuardService)
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @UseGuards(AuthGuardService)
   @Get()
   getUsers() {
     return this.usersService.getUsers();
@@ -22,14 +22,4 @@ export class UsersController {
   updateUser(@Param('id') id: number, @Body() user: any) {
     return this.usersService.updateUser(id, user);
   }
-
-  // @Get(':username')
-  // getUserByUsername(@Param('username') username: string) {
-  //   return this.usersService.getUserByUsername(username);
-  // }
-
-  // @Get(':email')
-  // getUserByEmail(@Param('email') email: string) {
-  //   return this.usersService.getUserByEmail(email);
-  // }
 }
