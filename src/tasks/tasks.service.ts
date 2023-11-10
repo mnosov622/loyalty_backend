@@ -42,7 +42,7 @@ export class TasksService {
       const task = await Task.findByPk(id);
       if (!task) throw new Error('No task found');
       await task.update({ ...taskDto });
-      return task;
+      return { task, status: HttpStatus.OK };
     } catch (e) {
       throw new Error(e);
     }
@@ -54,9 +54,9 @@ export class TasksService {
       const result = await Task.findOne({ where: { id } });
       if (!result) throw new Error('No task found');
 
-      const unlinkAsync = promisify(fs.unlink);
-      const imagePath = result.imagePath;
-      if (imagePath) {
+      if (result.imagePath && result.imagePath !== '') {
+        const unlinkAsync = promisify(fs.unlink);
+        const imagePath = result.imagePath;
         await unlinkAsync(imagePath);
       }
 
