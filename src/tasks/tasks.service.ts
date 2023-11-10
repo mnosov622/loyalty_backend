@@ -9,10 +9,10 @@ export class TasksService {
     return tasks;
   }
 
-  async createTask(taskDto: TaskDto) {
+  async createTask(taskDto: TaskDto, imagePath: string) {
     if (!taskDto) throw new Error('No task data provided');
     try {
-      const task = await Task.create({ ...taskDto });
+      const task = await Task.create({ ...taskDto, imagePath });
       return {
         task,
         status: HttpStatus.CREATED,

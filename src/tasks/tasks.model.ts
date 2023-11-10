@@ -45,4 +45,14 @@ export class Task extends Model {
     allowNull: true,
   })
   dueDate: Date;
+
+  @ApiProperty({
+    example: 'https://example.com/image.png',
+    description: 'Ссылка на изображение',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  imagePath: string;
 }
