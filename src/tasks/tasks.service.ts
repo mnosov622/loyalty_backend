@@ -1,6 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { Task } from './tasks.model';
 import { TaskDto } from './dto/tasks.dto';
+import { promisify } from 'util';
+import * as fs from 'fs';
 
 @Injectable()
 export class TasksService {
@@ -49,9 +51,22 @@ export class TasksService {
   async deleteTask(id: number) {
     if (!id) throw new Error('No task id provided');
     try {
-      const result = await Task.destroy({ where: { id } });
-      if (result === 0) throw new Error('No task found');
-      return { message: `Task with id ${id} has been deleted` };
+      const result = await Task.findOne({ where: { id } });
+      if (!result) throw new Error('No task found');
+
+      const unlinkAsync = promisify(fs.unlink);
+      const imagePath = result.imagePath;
+      if (imagePath) {
+        await unlinkAsync(imagePath);
+      }
+
+      result.isDeleted = true;
+      await result.save();
+
+      return {
+        message: `Task with id ${id} has been deleted`,
+        status: HttpStatus.OK,
+      };
     } catch (e) {
       throw new Error(e.message);
     }

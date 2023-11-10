@@ -55,4 +55,15 @@ export class Task extends Model {
     allowNull: true,
   })
   imagePath: string;
+
+  @ApiProperty({
+    example: 'false',
+    description: 'Task is deleted or not',
+  })
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  })
+  isDeleted: boolean;
 }
