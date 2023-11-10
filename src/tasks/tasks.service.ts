@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { Task } from './tasks.model';
 import { TaskDto } from './dto/tasks.dto';
 
@@ -13,7 +13,10 @@ export class TasksService {
     if (!taskDto) throw new Error('No task data provided');
     try {
       const task = await Task.create({ ...taskDto });
-      return task;
+      return {
+        task,
+        status: HttpStatus.CREATED,
+      };
     } catch (e) {
       throw new Error(e);
     }

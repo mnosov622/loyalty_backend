@@ -16,10 +16,10 @@ import { AuthGuardService } from '@/auth-guard/auth-guard.service';
 export class SessionsController {
   constructor(private sessionsService: SessionsService) {}
 
-  @Post()
+  @Post('validate')
   async validateUser(@Req() request: Request) {
     console.log('request', request.cookies['token']);
-    let token = request.cookies['token'];
+    const token = request.cookies['token'];
     if (!token) {
       throw new UnauthorizedException('No token provided');
     }
@@ -31,5 +31,22 @@ export class SessionsController {
     }
 
     return 'Token is valid';
+  }
+
+  @Post('logout')
+  async logout(@Req() request: Request, @Res() response) {
+    const token = request.headers.authorization?.split(' ')[1];
+    if (!token) {
+      throw new UnauthorizedException('No token provided');
+    }
+
+    try {
+      await this.sessionsService.deleteSession(token);
+    } catch (e) {
+      throw new UnauthorizedException(e.message);
+    }
+
+    response.clearCookie('token');
+    return 'Logged out successfully';
   }
 }

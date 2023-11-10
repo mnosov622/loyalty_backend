@@ -15,6 +15,7 @@ export class SessionsService {
 
   async validateToken(token: string) {
     const session = await Sessions.findOne({ where: { token } });
+    console.log('session', session);
     if (!session) {
       throw new UnauthorizedException('Token not found');
     }

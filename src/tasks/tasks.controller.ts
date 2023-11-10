@@ -6,12 +6,16 @@ import {
   Param,
   Delete,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { TaskDto } from './dto/tasks.dto';
 import { AuthGuardService } from '@/auth-guard/auth-guard.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Task } from './tasks.model';
 
-@UseGuards(AuthGuardService)
+// @UseGuards(AuthGuardService)
 @Controller('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
@@ -27,8 +31,9 @@ export class TasksController {
   }
 
   @Post()
-  createTask(@Body() taskDto: TaskDto) {
-    return this.tasksService.createTask(taskDto);
+  @UseInterceptors(FileInterceptor('image'))
+  createTask(@UploadedFile() image, @Body() task: TaskDto) {
+    return this.tasksService.createTask({ ...task, image });
   }
 
   @Post(':id')
