@@ -9,7 +9,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Task } from '@/tasks/tasks.model';
 import { Role } from '@/roles/roles.model';
-import { UserTask } from '@/userTask/userTask.model';
+import { UserTask } from '@/user-task/userTask.model';
 
 @Table({
   tableName: 'users',

@@ -9,7 +9,7 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@/users/users.model';
-import { UserTask } from '@/userTask/userTask.model';
+import { UserTask } from '@/user-task/userTask.model';
 
 @Table({
   tableName: 'tasks',

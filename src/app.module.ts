@@ -48,7 +48,9 @@ import { SessionsModule } from './sessions/sessions.module';
 import { AuthGuardModule } from './auth-guard/auth-guard.module';
 import { AuthGuardService } from './auth-guard/auth-guard.service';
 import { FilesService } from './files/files.service';
-import { UserTask } from './userTask/userTask.model';
+import { UserTask } from './user-task/userTask.model';
+import { UserTaskController } from './user-task/user-task.controller';
+import { UserTaskService } from './user-task/user-task.service';
 
 @Module({
   imports: [
@@ -109,6 +111,7 @@ import { UserTask } from './userTask/userTask.model';
     TestsController,
     AnalyticsController,
     SessionsController,
+    UserTaskController,
   ],
   providers: [
     AppService,
@@ -121,6 +124,7 @@ import { UserTask } from './userTask/userTask.model';
     SessionsService,
     AuthGuardService,
     FilesService,
+    UserTaskService,
   ],
 })
 export class AppModule {}

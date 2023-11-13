@@ -36,10 +36,12 @@ export class TasksService {
   }
 
   async updateTask(id: number, taskDto: TaskDto) {
+    console.log('dto', taskDto);
     if (!id) throw new Error('No task id provided');
     if (!taskDto) throw new Error('No task data provided');
     try {
       const task = await Task.findByPk(id);
+      console.log('dto', taskDto);
       if (!task) throw new Error('No task found');
       await task.update({ ...taskDto });
       return { task, status: HttpStatus.OK };

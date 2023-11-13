@@ -71,7 +71,7 @@ export class TasksController {
 
   @Post(':id')
   updateTask(@Param('id') id: number, @Body() taskDto: TaskDto) {
-    return this.tasksService.updateTask(id, taskDto);
+    return this.tasksService.updateTask(id, { ...taskDto });
   }
 
   @Delete(':id')
