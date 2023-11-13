@@ -1,5 +1,15 @@
-import { Model, Column, Table, DataType } from 'sequelize-typescript';
+import {
+  Model,
+  Column,
+  Table,
+  DataType,
+  BelongsToMany,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '@/users/users.model';
+import { UserTask } from '@/userTask/userTask.model';
 
 @Table({
   tableName: 'tasks',
@@ -66,4 +76,11 @@ export class Task extends Model {
     defaultValue: false,
   })
   isDeleted: boolean;
+
+  @BelongsToMany(() => User, () => UserTask)
+  users: User[];
+
+  @ForeignKey(() => User)
+  @Column({ type: DataType.INTEGER })
+  userId: number;
 }

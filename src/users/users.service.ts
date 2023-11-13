@@ -39,7 +39,7 @@ export class UsersService {
     }
 
     try {
-      const roles = [1];
+      const roles = ['user'];
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(userData.password, salt);
 

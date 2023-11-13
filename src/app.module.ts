@@ -48,6 +48,7 @@ import { SessionsModule } from './sessions/sessions.module';
 import { AuthGuardModule } from './auth-guard/auth-guard.module';
 import { AuthGuardService } from './auth-guard/auth-guard.service';
 import { FilesService } from './files/files.service';
+import { UserTask } from './userTask/userTask.model';
 
 @Module({
   imports: [
@@ -74,6 +75,7 @@ import { FilesService } from './files/files.service';
         Quest,
         Files,
         Sessions,
+        UserTask,
       ],
       autoLoadModels: true,
     }),

@@ -1,10 +1,26 @@
-import { Model, Column, Table, DataType } from 'sequelize-typescript';
+import {
+  Model,
+  Column,
+  Table,
+  DataType,
+  BelongsToMany,
+  HasMany,
+} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Task } from '@/tasks/tasks.model';
+import { Role } from '@/roles/roles.model';
+import { UserTask } from '@/userTask/userTask.model';
 
 @Table({
   tableName: 'users',
 })
 export class User extends Model {
+  @BelongsToMany(() => Task, () => UserTask)
+  tasks: Task[];
+
+  // @HasMany(() => Task)
+  // tasks: Task[];
+
   @ApiProperty({
     example: 1,
     description: 'Уникальный идентификатор',
