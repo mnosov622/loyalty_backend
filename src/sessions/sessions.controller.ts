@@ -11,11 +11,11 @@ import { SessionsService } from './sessions.service';
 import { Request } from 'express';
 import { AuthGuardService } from '@/auth-guard/auth-guard.service';
 
-@UseGuards(AuthGuardService)
 @Controller('sessions')
 export class SessionsController {
   constructor(private sessionsService: SessionsService) {}
 
+  @UseGuards(AuthGuardService)
   @Post('validate')
   async validateUser(@Req() request: Request) {
     console.log('request', request.cookies['token']);
@@ -36,6 +36,7 @@ export class SessionsController {
   @Post('logout')
   async logout(@Req() request: Request, @Res() response) {
     const token = request.headers.authorization?.split(' ')[1];
+    console.log('token', token);
     if (!token) {
       throw new UnauthorizedException('No token provided');
     }

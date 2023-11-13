@@ -1,8 +1,9 @@
 import { Body, Controller, Post, Get, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuardService } from '@/auth-guard/auth-guard.service';
+import { ValidateUserGuardService } from '@/validate-user-guard/validate-user-guard';
 
-// @UseGuards(AuthGuardService)
+@UseGuards(AuthGuardService)
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -12,6 +13,7 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
+  @UseGuards(ValidateUserGuardService)
   @Get(':id')
   getUserById(@Param('id') id: number) {
     console.log('here');
