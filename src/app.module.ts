@@ -51,6 +51,7 @@ import { FilesService } from './files/files.service';
 import { UserTask } from './user-task/userTask.model';
 import { UserTaskController } from './user-task/user-task.controller';
 import { UserTaskService } from './user-task/user-task.service';
+import { UserTaskModule } from './user-task/user-task.module';
 
 @Module({
   imports: [
@@ -99,6 +100,7 @@ import { UserTaskService } from './user-task/user-task.service';
     FilesModule,
     SessionsModule,
     AuthGuardModule,
+    UserTaskModule,
   ],
   controllers: [
     AppController,

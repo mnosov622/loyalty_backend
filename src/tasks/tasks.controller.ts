@@ -41,7 +41,7 @@ export class TasksController {
     FileInterceptor('image', {
       storage: diskStorage({
         destination: (req, file, cb) => {
-          const dir = './files';
+          const dir = './files/tasks';
           if (!existsSync(dir)) {
             mkdirSync(dir);
           }
@@ -63,7 +63,7 @@ export class TasksController {
   async createTask(@UploadedFile() image, @Body() task: TaskDto) {
     let imagePath = '';
     if (image) {
-      imagePath = `files/${image.filename}`;
+      imagePath = `files/tasks/${image.filename}`;
       await this.fileService.createFile(imagePath);
     }
     return await this.tasksService.createTask(task, imagePath);

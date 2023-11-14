@@ -100,6 +100,7 @@ export class UsersService {
         username: user.username,
         wallet_address: user?.wallet_address,
         firstName: user.firstName,
+        lastName: user.lastName,
       };
 
       const secretKey = process.env.JWT_SECRET_KEY;

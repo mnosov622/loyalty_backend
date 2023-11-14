@@ -5,4 +5,5 @@ export class userTaskDto {
   taskId: number;
   userId: number;
   authorId: number;
+  comment: string;
 }

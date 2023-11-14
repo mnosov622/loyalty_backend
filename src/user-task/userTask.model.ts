@@ -23,6 +23,12 @@ export class UserTask extends Model {
   @Column
   userId: number;
 
+  @Column(DataType.STRING)
+  userName: string;
+
+  @Column(DataType.STRING)
+  userEmail: string;
+
   @ForeignKey(() => Task)
   @Column
   taskId: number;
@@ -39,4 +45,10 @@ export class UserTask extends Model {
   @ForeignKey(() => User)
   @Column
   authorId: number;
+
+  @Column(DataType.STRING)
+  link: string;
+
+  @Column(DataType.STRING)
+  comment: string;
 }

@@ -56,14 +56,14 @@ export class TasksService {
       const result = await Task.findOne({ where: { id } });
       if (!result) throw new Error('No task found');
 
+      result.isDeleted = true;
+      await result.save();
+
       if (result.imagePath && result.imagePath !== '') {
         const unlinkAsync = promisify(fs.unlink);
         const imagePath = result.imagePath;
         await unlinkAsync(imagePath);
       }
-
-      result.isDeleted = true;
-      await result.save();
 
       return {
         message: `Task with id ${id} has been deleted`,
